@@ -66,8 +66,34 @@
         </script>
         <script type="text/javascript">
             $("#crearTorneo").click(function () {
-                $('#crearTorneoForm').submit();
+                var nombre = $("input[name='nombre']").val().trim();
+                var estructura = $("select[name='estructura']").val();
+                var numeroJugadores = $("input[name='numeroJugadores']").val().trim();
+                var numeroMesas = $("input[name='numeroMesas']").val().trim()
+                var error = false;
+                   
+                if(nombre==''||estructura=='--'||numeroJugadores==''||numeroMesas){
+                    alert("Todos los campos deben estar llenos");
+                    error = true;
+                }
+                             
+                if(isNaN(numeroJugadores)){
+                    alert("El número de jugadores no debe contener letras o caracteres especiales");
+                    error = true
+                }
+                
+                if(isNaN(numeroMesas)){
+                    alert("El número de mesas no debe contener letras o caracteres especiales");
+                    error = true
+                }
+                
+                if(error==false){
+                    $('#crearTorneoForm').submit();
+                }                
             });
+            
+            
+            
         </script>
     </body>
 </html>

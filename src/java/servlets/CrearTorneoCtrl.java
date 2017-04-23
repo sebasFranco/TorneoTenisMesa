@@ -53,6 +53,8 @@ public class CrearTorneoCtrl extends HttpServlet {
         } catch (NumberFormatException e) {
         }
         
+        request.setAttribute("errorMsg", "sfdsd");
+        
         torneo.setNombre(nombre);
         torneo.setCantidadJugadores(cantidadJugadores);
         torneo.setCantidadMesas(cantidadMesas);
