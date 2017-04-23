@@ -87,7 +87,7 @@ public class TorneoDB {
                 estructura = FactoriaEstructura.getEstructura(rs.getInt(i++));
                 torneo.setCantidadJugadores(rs.getInt(i++));
                 torneo.setCantidadMesas(rs.getInt(i++));
-                estructura.setNombre(rs.getString(rs.getInt(i++)));
+                estructura.setNombre(rs.getString(i++));
                 torneo.setEstructura(estructura);
                 
                 torneos.add(torneo);

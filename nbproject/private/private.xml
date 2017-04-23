@@ -5,11 +5,23 @@
         <group>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Partido.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Estructura.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Cuadros.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/web/consultarTorneosVista.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/db/UsuarioDB.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/services/Nodo.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/db/TorneoDB.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Arbol.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/servlets/CrearTorneoCtrl.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/servlets/DefinirUsuariosTorneoCtrl.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/web/admin/crearTorneoVista.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/servlets/UsuariosTorneoCtrl.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/web/admin/usuariosTorneoVista.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/servlets/ConsultarTorneosCtrl.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Cuadros.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Usuario.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/modelo/Torneo.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/services/Partidos.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/services/Arbol.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/servlets/IniciarSesionCtrl.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/TorneoTenisMesa/src/java/servlets/Arbol.java</file>
         </group>
     </open-files>

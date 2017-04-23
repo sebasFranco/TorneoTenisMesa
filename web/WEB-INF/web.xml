@@ -17,7 +17,7 @@
         <servlet-class>servlets.ModificarUsuarioCtrl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ConsultarTorneos</servlet-name>
+        <servlet-name>ConsultarTorneosCtrl</servlet-name>
         <servlet-class>servlets.ConsultarTorneosCtrl</servlet-class>
     </servlet>
     <servlet>
@@ -57,8 +57,8 @@
         <url-pattern>/ModificarUsuario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ConsultarTorneos</servlet-name>
-        <url-pattern>/ConsultarTorneos</url-pattern>
+        <servlet-name>ConsultarTorneosCtrl</servlet-name>
+        <url-pattern>/ConsultarTorneosCtrl</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Arbol</servlet-name>

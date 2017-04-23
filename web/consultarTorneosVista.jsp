@@ -21,7 +21,7 @@
         </style>
     </head>
     <body id="page-top" class="index background">
-        <jsp:include page="menuAdmin.jsp" />
+        <%--<jsp:include page="menuAdmin.jsp" />--%>
         <section >
             <div class="container">
                 <div class="row">
@@ -35,49 +35,37 @@
                                     <h3 class="">Usuarios</h3>
                                 </div>
                                 <div class="col-md-offset-4 col-md-4 text-right">
-                                    <a class="btn btn-success btn-xs" href="/TorneoTenisMesa/Admin/CrearUsuario">Crear Usuario</a>
+                                    <a class="btn btn-success btn-xs" href="/TorneoTenisMesa/admin/crearTorneoVista.jsp">Crear Torneo</a>
                                 </div>
                             </div>
                         
+                            ${torneos}
                         <c:choose>
-                            <c:when test="${usuarios==null}">
-                                No hay usuarios
+                            <c:when test="${torneos==null}">
+                                No hay torneos
                             </c:when>
                             <c:otherwise>
                                 <table class="table table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>Id Usuario</th>
+                                            <th>Id Torneo</th>
                                             <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Cedula</th>
-                                            <th>Tel&eacute;fono</th>
-                                            <th>Tipo</th>
-                                            <th>Estado</th>
+                                            <th>Estructura</th>
+                                            <th># Jugadores</th>
+                                            <th># Mesas</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${usuarios}" var="usuario">
+                                        <c:forEach items="${torneos}" var="torneo">
                                         <tr>
-                                            <td>${usuario.idUsuario}</td>
-                                            <td>${usuario.nombre}</td>
-                                            <td>${usuario.apellido}</td>
-                                            <td>${usuario.cedula}</td>
-                                            <td>${usuario.telefono}</td>
-                                            <td>${usuario.tipo}</td>
+                                            <td>${torneo.idTorneo}</td>
+                                            <td>${torneo.nombre}</td>
+                                            <td>${torneo.estructura.nombre}</td>
+                                            <td>${torneo.cantidadJugadores}</td>
+                                            <td>${torneo.cantidadMesas}</td>
                                             <td>
-                                                <c:choose>
-                                                    <c:when test="${usuario.estado==true}">
-                                                        <div class="square square-green"></div>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <div class="square square-red"></div>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/ConsultarUsuario?idUsuario=${usuario.idUsuario}">Consultar</a>
+                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/ConsultarTorneoCtrl?idTorneo=${torneo.idTorneo}">Consultar</a>
                                             </td>
                                         </tr>
                                         </c:forEach>
