@@ -19,7 +19,7 @@ import services.DBManager;
  */
 public class TorneoDB {
     private final String TABLE_NAME = "Torneo";
-    private final String SQL_INSERT = "INSERT INTO " + TABLE_NAME +" (nombre,apellido,cedula,estado,nombreUsuario,clave,tipo,telefono) VALUES (?,?,?,?,?,?,?,?)";
+    private final String SQL_INSERT = "INSERT INTO " + TABLE_NAME +" (nombre, idEstructura, cantidadJugadores, cantidadMesas) VALUES (?,?,?,?)";
     private final String SQL_INSERT_ID = "SELECT @@identity AS id";
 
     public TorneoDB() {
@@ -34,12 +34,15 @@ public class TorneoDB {
             int index = 1;
             connection = DBManager.getConnection();
             statement = connection.prepareStatement(SQL_INSERT);
-            statement.setString(index++, "");
+            statement.setString(index++, torneo.getNombre());
+            statement.setInt(index++, torneo.getEstructura().getIdEstructura());
+            statement.setInt(index++, torneo.getCantidadJugadores());
+            statement.setInt(index++, torneo.getCantidadMesas());
             System.out.println("Ejecutando query: " + SQL_INSERT);
             rows = statement.executeUpdate();
             System.out.println("Registros Afectados :" + rows);
             /**
-             * Obtiene el id del cliente que se acabo de insertar
+             * Obtiene el id del torneo que se acabo de insertar
              */
             statement = connection.prepareStatement(SQL_INSERT_ID);
             rs = statement.executeQuery();

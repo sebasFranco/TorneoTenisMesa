@@ -18,5 +18,23 @@ public abstract class Estructura {
 	 * @param modalidad
 	 * @param cantidadJugadores
 	 */
-	public abstract void crearEstructura(int cantidadJugadores);
+	public abstract services.Arbol crearEstructura(int cantidadJugadores);
+
+    public int getIdEstructura() {
+        return idEstructura;
+    }
+
+    public void setIdEstructura(int idEstructura) {
+        this.idEstructura = idEstructura;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+        
+        
 }//end Estructura

@@ -96,5 +96,11 @@ public class Usuario {
         this.telefono = telefono;
     }
 
+    @Override
+    public String toString() {
+        return idUsuario + " : " + nombre; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 	
 }//end Usuario

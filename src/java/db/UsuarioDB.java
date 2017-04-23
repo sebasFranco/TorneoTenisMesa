@@ -23,6 +23,8 @@ public class UsuarioDB {
     private final String SQL_INSERT_ID = "SELECT @@identity AS id";
     private final String SQL_VALID = "SELECT * FROM " + TABLE_NAME + " WHERE nombreUsuario = ? AND clave = ? AND tipo = ?";
     private final String SQL_USUARIOS = "SELECT * FROM " + TABLE_NAME + " u ORDER BY u.idUsuario DESC";
+    private final String SQL_JUGADORES = "SELECT * FROM " + TABLE_NAME + " u WHERE tipo = 'Jugador' ORDER BY u.idUsuario DESC";
+    private final String SQL_ARBITROS = "SELECT * FROM " + TABLE_NAME + " u WHERE tipo = 'Arbitro' ORDER BY u.idUsuario DESC";
     private final String SQL_SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE idUsuario = ?";
     private final String SQL_UPDATE = "UPDATE usuario SET nombre=?, apellido=?, nombreUsuario=?, clave=?, telefono=? WHERE idUsuario=?";
     
@@ -206,6 +208,80 @@ public class UsuarioDB {
             DBManager.close(connection);
         }
         return rows;
+    }
+    
+    public ArrayList<Usuario> getJugadores(){
+        ArrayList<Usuario> jugadores = new ArrayList<Usuario>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        Usuario usuario;
+        try {
+            connection = DBManager.getConnection();
+            System.out.println("Ejecutando query:" + SQL_JUGADORES);
+            statement = connection.prepareStatement(SQL_JUGADORES);
+            rs = statement.executeQuery();
+            int i;
+            while(rs.next()){
+                i=1;
+                usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt(i++));
+                usuario.setNombre(rs.getString(i++));
+                usuario.setApellido(rs.getString(i++));
+                usuario.setCedula(rs.getString(i++));
+                usuario.setEstado(rs.getBoolean(i++));
+                usuario.setNombreUsuario(rs.getString(i++));
+                usuario.setClave(rs.getString(i++));
+                usuario.setTipo(rs.getString(i++));
+                usuario.setTelefono(rs.getString(i++));
+                
+                jugadores.add(usuario);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        return jugadores;
+    }
+    
+    public ArrayList<Usuario> getArbitros(){
+        ArrayList<Usuario> jugadores = new ArrayList<Usuario>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        Usuario usuario;
+        try {
+            connection = DBManager.getConnection();
+            System.out.println("Ejecutando query:" + SQL_ARBITROS);
+            statement = connection.prepareStatement(SQL_ARBITROS);
+            rs = statement.executeQuery();
+            int i;
+            while(rs.next()){
+                i=1;
+                usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt(i++));
+                usuario.setNombre(rs.getString(i++));
+                usuario.setApellido(rs.getString(i++));
+                usuario.setCedula(rs.getString(i++));
+                usuario.setEstado(rs.getBoolean(i++));
+                usuario.setNombreUsuario(rs.getString(i++));
+                usuario.setClave(rs.getString(i++));
+                usuario.setTipo(rs.getString(i++));
+                usuario.setTelefono(rs.getString(i++));
+                
+                jugadores.add(usuario);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        return jugadores;
     }
     /*
     public int delete(int id){

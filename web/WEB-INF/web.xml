@@ -20,6 +20,22 @@
         <servlet-name>ConsultarTorneos</servlet-name>
         <servlet-class>servlets.ConsultarTorneos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Arbol</servlet-name>
+        <servlet-class>servlets.Arbol</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CrearTorneoCtrl</servlet-name>
+        <servlet-class>servlets.CrearTorneoCtrl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsuariosTorneoCtrl</servlet-name>
+        <servlet-class>servlets.UsuariosTorneoCtrl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DefinirUsuariosTorneoCtrl</servlet-name>
+        <servlet-class>servlets.DefinirUsuariosTorneoCtrl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
         <url-pattern>/IniciarSesion</url-pattern>
@@ -39,6 +55,22 @@
     <servlet-mapping>
         <servlet-name>ConsultarTorneos</servlet-name>
         <url-pattern>/ConsultarTorneos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Arbol</servlet-name>
+        <url-pattern>/arbol</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrearTorneoCtrl</servlet-name>
+        <url-pattern>/admin/CrearTorneoCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuariosTorneoCtrl</servlet-name>
+        <url-pattern>/admin/UsuariosTorneoCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DefinirUsuariosTorneoCtrl</servlet-name>
+        <url-pattern>/admin/DefinirUsuariosTorneoCtrl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

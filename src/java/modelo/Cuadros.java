@@ -8,11 +8,11 @@ package modelo;
 public class Cuadros extends Estructura {
 
 	public Cuadros(){
-
+            this.setIdEstructura(FactoriaEstructura.ESTRUCTURA_CUADROS);
 	}
 
     @Override
-    public void crearEstructura(int cantidadJugadores) {
+    public services.Arbol crearEstructura(int cantidadJugadores) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
