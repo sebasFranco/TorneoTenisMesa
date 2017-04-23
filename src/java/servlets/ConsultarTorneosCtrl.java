@@ -6,24 +6,18 @@
 
 package servlets;
 
-import db.TorneoDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Estructura;
-import modelo.FactoriaEstructura;
-import modelo.Torneo;
 
 /**
  *
  * @author DELL
  */
-public class CrearTorneoCtrl extends HttpServlet {
-    TorneoDB torneoDB = new TorneoDB();
+public class ConsultarTorneosCtrl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,38 +31,21 @@ public class CrearTorneoCtrl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        Torneo torneo = new Torneo();
-        String nombre,tipoEstructura,numeroJugadores,numeroMesas,nombreEstructura;
-        int cantidadJugadores = 0, cantidadMesas = 0, tipoEstructuraInt = 0, idTorneo;
-        nombre = request.getParameter("nombre");
-        tipoEstructura = request.getParameter("estructura");
-        numeroJugadores = request.getParameter("numeroJugadores");
-        numeroMesas = request.getParameter("numeroMesas");
-        nombreEstructura = request.getParameter("nombreEstructura");
+        PrintWriter out = response.getWriter();
         try {
-            cantidadJugadores = Integer.parseInt(numeroJugadores);
-            cantidadMesas = Integer.parseInt(numeroMesas);
-            tipoEstructuraInt = Integer.parseInt(tipoEstructura);
-        } catch (NumberFormatException e) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ConsultarTorneos</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ConsultarTorneos at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
         }
-        
-        torneo.setNombre(nombre);
-        torneo.setCantidadJugadores(cantidadJugadores);
-        torneo.setCantidadMesas(cantidadMesas);
-        Estructura estructura = FactoriaEstructura.getEstructura(tipoEstructuraInt);
-        estructura.setNombre(nombreEstructura);
-        torneo.setEstructura(estructura);
-        
-        idTorneo = torneoDB.insert(torneo);
-        
-        if (idTorneo > 0) {
-            torneo.setIdTorneo(idTorneo);
-            session.setAttribute("torneoSession", torneo);
-            response.sendRedirect("/TorneoTenisMesa/admin/UsuariosTorneoCtrl");
-            return;
-        }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
