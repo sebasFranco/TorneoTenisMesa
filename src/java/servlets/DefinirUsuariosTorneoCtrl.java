@@ -6,19 +6,27 @@
 
 package servlets;
 
+import db.TorneoDB;
+import db.UsuarioDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modelo.Usuario;
 
 /**
  *
  * @author DELL
  */
 public class DefinirUsuariosTorneoCtrl extends HttpServlet {
+    TorneoDB torneoDB = new TorneoDB();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +40,31 @@ public class DefinirUsuariosTorneoCtrl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         String[] jugadoresSeleccionados, arbitrosSeleccionados, names;
-        Map<String, String[]> map;
-        map = request.getParameterMap();
-        jugadoresSeleccionados = request.getParameterValues("jugadoresSeleccionados");
-        arbitrosSeleccionados = request.getParameterValues("arbitrosSeleccionados");
+        jugadoresSeleccionados = request.getParameterValues("jugadoresSelec[]");
+        arbitrosSeleccionados = request.getParameterValues("arbitrosSelec[]");
+        ArrayList<Usuario> jugadores = construirUsuarios(new ArrayList<String>(Arrays.asList(jugadoresSeleccionados)));
+        ArrayList<Usuario> arbitros = construirUsuarios(new ArrayList<String>(Arrays.asList(jugadoresSeleccionados)));
+        torneoDB.definirUsuarios(jugadores, arbitros);
+        session.setAttribute("jugadoresSesion", jugadores);
+        session.setAttribute("arbitrosSesion", arbitros);
+        response.sendRedirect("/TorneoTenisMesa/admin/CrearEstructuraCtrl");
+    }
+    
+    private ArrayList<Usuario> construirUsuarios(ArrayList<String> usuariosString){
+        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+        Usuario usuario;
+        for (String idUsuarioString : usuariosString) {
+            try {
+                usuario = new Usuario();
+                int idUsuario = Integer.parseInt(idUsuarioString);
+                usuario.setIdUsuario(idUsuario);
+                usuarios.add(usuario);
+            } catch (NumberFormatException e) {
+            }
+        }
+        return usuarios;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

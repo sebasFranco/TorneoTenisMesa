@@ -16,7 +16,7 @@
                     <form class="form-horizontal" action="/TorneoTenisMesa/admin/DefinirUsuariosTorneoCtrl" method="post" name="crearTorneo" id="crearTorneoForm">
                         <div class="col-md-5">
                                 <div class="form-group">
-                                    <select name="jugadores" class="form-control" id="jugadores">
+                                    <select name="jugadores" class="form-control" id="jugadores" multiple>
                                         <c:forEach items="${jugadores}" var="jugador">
                                             <option value="${jugador.idUsuario}">${jugador.nombre}</option>
                                         </c:forEach>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-5 col-md-offset-2 ">
                             <div class="form-group">
-                                    <select name="arbitros" class="form-control"  id="arbitros">
+                                    <select name="arbitros" class="form-control"  id="arbitros" multiple>
                                         <c:forEach items="${arbitros}" var="arbitro">
                                             <option value="${arbitro.idUsuario}">${arbitro.nombre}</option>
                                         </c:forEach>
@@ -48,14 +48,16 @@
                                 <button type="button" id="removerArbitro" class="btn btn-success">Remover Arbitro</button>
                             </div>
                             <div class="form-group">
-                                <select name="arbitrosSeleccionados" class="form-control" id="arbitrosSeleccionados">
+                                <select name="arbitrosSeleccionados" class="form-control" id="arbitrosSeleccionados" multiple>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <button type="button" id="confirmarJugadores" class="btn btn-success">Confirmar Jugadores</button>
                             </div>
                         </div>
-                        <button type="button" id="submit">Submit</button>
+                        <div id="listaJugadores"></div>
+                        <div id="listaArbitros"></div>
+                        <button type="button" id="crearTorneo">Submit</button>
                     </form>
                 </div>
             </div>
@@ -64,16 +66,19 @@
         <script type="text/javascript">
             var cantidadJugadores = ${cantidadJugadores};
             var cantidadMesas = ${cantidadMesas};
-            $('#submit').click(function (){
+            $('#crearTorneo').click(function (){
+                $('#listaJugadores').html('');
+                $('#listaArbitros').html('');
                 $('#jugadoresSeleccionados option').each(function (i,e){
-                    var input = '<input name="jugadoresSelec[]" value="' + $(e).val() + '"/>';
-                    $('#crearTorneoForm').append(input);
+                    var input = '<input name="jugadoresSelec[]" type="hidden" value="' + $(e).val() + '"/>';
+                    $('#listaJugadores').append(input);
                 });
-            });
-            $("#crearTorneo").click(function () {
+                $('#arbitrosSeleccionados option').each(function (i,e){
+                    var input = '<input name="arbitrosSelec[]" type="hidden" value="' + $(e).val() + '"/>';
+                    $('#listaArbitros').append(input);
+                });
                 $('#crearTorneoForm').submit();
             });
-            
              $('#agregarJugador').click(function(e) {
             var selectedOpts = $('#jugadores option:selected');
             if (selectedOpts.length == 0) {

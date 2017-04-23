@@ -30,6 +30,7 @@
                                         <option value="1">Arbol</option>
                                         <option value="2">Cuadros</option>
                                     </select>
+                                    <input name="nombreEstructura" type="hidden" id="nombreEstructura" value=""/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,6 +58,12 @@
             </div>
         </section>
         <jsp:include page="_footer.jsp"/>
+        <script type="text/javascript">
+            $("#estructura").change(function (){
+                var nombreEstructura = $('#estructura option:selected').html();
+                $('#nombreEstructura').val(nombreEstructura);
+            });
+        </script>
         <script type="text/javascript">
             $("#crearTorneo").click(function () {
                 var nombre = $("input[name='nombre']").val().trim();
