@@ -32,14 +32,13 @@
                         </c:if>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <h3 class="">Usuarios</h3>
+                                    <h3 class="">Torneos</h3>
                                 </div>
                                 <div class="col-md-offset-4 col-md-4 text-right">
                                     <a class="btn btn-success btn-xs" href="/TorneoTenisMesa/admin/crearTorneoVista.jsp">Crear Torneo</a>
                                 </div>
                             </div>
                         
-                            ${torneos}
                         <c:choose>
                             <c:when test="${torneos==null}">
                                 No hay torneos

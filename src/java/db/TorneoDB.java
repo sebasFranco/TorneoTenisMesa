@@ -26,6 +26,7 @@ public class TorneoDB {
     private final String SQL_INSERT = "INSERT INTO " + TABLE_NAME +" (nombre, idEstructura, cantidadJugadores, cantidadMesas) VALUES (?,?,?,?)";
     private final String SQL_INSERT_ID = "SELECT @@identity AS id";
     private final String SQL_TORNEOS = "SELECT t.*,e.nombre FROM " + TABLE_NAME + " t JOIN estructura e ON e.idEstructura = t.idEstructura";
+    private final String SQL_SELECT_ID = "SELECT t.*,e.nombre FROM " + TABLE_NAME + "  t JOIN estructura e ON e.idEstructura = t.idEstructura WHERE t.idTorneo = ?";
 
     public TorneoDB() {
     }
@@ -100,5 +101,38 @@ public class TorneoDB {
             DBManager.close(connection);
         }
         return torneos;
+    }
+    
+    public Torneo buscarTorneo(int idTorneo) {
+        Torneo torneo = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            int i = 1;
+            connection = DBManager.getConnection();
+            System.out.println("Ejecutando query:" + SQL_SELECT_ID);
+            statement = connection.prepareStatement(SQL_SELECT_ID);
+            statement.setInt(i++, idTorneo);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                i=1;
+                torneo = new Torneo();
+                torneo.setIdTorneo(rs.getInt(i++));
+                torneo.setNombre(rs.getString(i++));
+                Estructura estructura = FactoriaEstructura.getEstructura(rs.getInt(i++));
+                torneo.setCantidadJugadores(rs.getInt(i++));
+                torneo.setCantidadMesas(rs.getInt(i++));
+                estructura.setNombre(rs.getString(i++));
+                torneo.setEstructura(estructura);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        return torneo;
     }
 }

@@ -40,31 +40,29 @@
                             </div>
                         
                         <c:choose>
-                            <c:when test="${torneos==null}">
+                            <c:when test="${partidos==null}">
                                 No hay torneos
                             </c:when>
                             <c:otherwise>
                                 <table class="table table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>Id Torneo</th>
-                                            <th>Nombre</th>
-                                            <th>Estructura</th>
-                                            <th># Jugadores</th>
-                                            <th># Mesas</th>
+                                            <th>Id Partido</th>
+                                            <th>Fecha - hora</th>
+                                            <th>Jugadores</th>
+                                            <th>Resultados</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${torneos}" var="torneo">
+                                        <c:forEach items="${partidos}" var="partido">
                                         <tr>
-                                            <td>${torneo.idTorneo}</td>
-                                            <td>${torneo.nombre}</td>
-                                            <td>${torneo.estructura.nombre}</td>
-                                            <td>${torneo.cantidadJugadores}</td>
-                                            <td>${torneo.cantidadMesas}</td>
+                                            <td>${partido.idPartidoTorneo}</td>
+                                            <td>${partido.fechaHoraF}</td>
+                                            <td>${partido.idJugador1} - ${partido.idJugador2}</td>
+                                            <td>${partido.resultado1} - ${partido.resultado2}</td>
                                             <td>
-                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/ConsultarTorneoCtrl?idTorneo=${torneo.idTorneo}">Consultar</a>
+                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/ConsultarPartidoCtrl?idPartido=${partido.idPartido}">Modificar</a>
                                             </td>
                                         </tr>
                                         </c:forEach>
