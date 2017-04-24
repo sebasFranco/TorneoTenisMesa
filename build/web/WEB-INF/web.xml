@@ -97,7 +97,6 @@
     <servlet-mapping>
         <servlet-name>NumeroJugadoresCtrl</servlet-name>
         <url-pattern>/NumeroJugadoresCtrl</url-pattern>
-
         <servlet-name>ConsultarTorneoCtrl</servlet-name>
         <url-pattern>/ConsultarTorneoCtrl</url-pattern>
     </servlet-mapping>
