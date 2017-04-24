@@ -12,16 +12,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/Admin/ConsultarUsuarios">Consultar Usuarios</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/Admin/ConsultarUsuariosCtrl">Consultar Usuarios</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarTorneos">Consultar Torneos</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarTorneosCtrl">Consultar Torneos</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarUsuario">Perfil</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarUsuarioCtrl">Perfil</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/CerrarSesion">Cerrar Sesi&oacute;n</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/CerrarSesionCtrl">Cerrar Sesi&oacute;n</a>
                     </li>
                 </ul>
             </div>

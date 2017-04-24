@@ -69,14 +69,18 @@
             var cantidadMesas = ${cantidadMesas};
             
             $(document).ready(function (){
-                var selectedOpts = $('#jugadores option:selected');
-                
                 $('#jugadores option').each(function (i,e){
-                    selectedOpts = $(e).val();
-                    $('#jugadoresSeleccionados').append($(selectedOpts).clone());
-                    $(selectedOpts).remove();
+                    if(i<cantidadJugadores){
+                        $('#jugadoresSeleccionados').append($(e).clone());
+                        $(e).remove();
+                    }
                 });
-                
+                $('#arbitros option').each(function (i,e){
+                    if(i<cantidadMesas){
+                        $('#arbitrosSeleccionados').append($(e).clone());
+                        $(e).remove();
+                    }
+                });
                 
             });
             
@@ -94,6 +98,8 @@
                 
                 if($('#arbitrosSeleccionados option').length==0){
                     alert('debe seleccionar los arbitros del torneo');
+                }else if($('#arbitrosSeleccionados option').length!=cantidadMesas){
+                    alert('debe seleccionar '+cantidadMesas+' arbitros para el torneo');
                 }else{
                     $('#crearTorneoForm').submit();
                 }
@@ -139,7 +145,7 @@
         $('#confirmarJugadores').click(function (e){
             
             if($('#jugadoresSeleccionados option').length!=cantidadJugadores){
-                alert('debe seleccionar '+cantidadJugadores+' jugadores del torneo');
+                alert('debe seleccionar '+cantidadJugadores+' jugadores para el torneo');
             }else if($('#jugadoresSeleccionados option').length==0){
                 alert('debe seleccionar los jugadores del torneo');
             }else{
@@ -147,11 +153,7 @@
                 $('#jug').attr('disabled','');
             }
         });
-        
-        $('#confirmarArbitros').click(function (e){
-            
-        });
-        
+               
         </script>
     </body>
 </html>
