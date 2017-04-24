@@ -44,6 +44,7 @@ public class ConsultarPartidoCtrl extends HttpServlet {
         Partido partido = partidoDB.buscarPartido(idPartido);
         
         request.setAttribute("partido", partido);
+        request.getRequestDispatcher("/arbitro/consultarPartidoVista.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
