@@ -9,21 +9,20 @@ package servlets;
 import db.TorneoDB;
 import db.UsuarioDB;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Torneo;
-import modelo.Usuario;
+import services.ValidarSesion;
 
 /**
  *
  * @author DELL
  */
-public class UsuariosTorneoCtrl extends HttpServlet {
-    UsuarioDB usuarioDB = new UsuarioDB();
+public class ConsultarTorneoCtrl extends HttpServlet {
     TorneoDB torneoDB = new TorneoDB();
 
     /**
@@ -38,15 +37,25 @@ public class UsuariosTorneoCtrl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session =  request.getSession();
-        Torneo torneo = (Torneo) session.getAttribute("torneoSession");
-        ArrayList<Usuario> jugadores = usuarioDB.getJugadores();
-        ArrayList<Usuario> arbitros = usuarioDB.getArbitros();
-        request.setAttribute("jugadores", jugadores);
-        request.setAttribute("arbitros", arbitros);
-        request.setAttribute("cantidadJugadores", torneo.getCantidadJugadores());
-        request.setAttribute("cantidadMesas", torneo.getCantidadMesas());
-        request.getRequestDispatcher("/admin/usuariosTorneoVista.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        int idTorneo = 0;
+        int tipo = 0;
+        Torneo torneo;
+        try {
+            idTorneo = Integer.parseInt(request.getParameter("idTorneo"));
+        } catch (NumberFormatException e) {
+            tipo = ValidarSesion.getTipoUsuarioSesion(session);
+            request.setAttribute("tipo",tipo);
+        }
+        if (idTorneo > 0) {
+            torneo = torneoDB.buscarTorneo(idTorneo);
+        } else {
+            response.sendRedirect("/TorneoTenisMesa/Admin/ConsultarTorneosCtrl");
+            return;
+        }
+        
+        request.setAttribute("torneo",torneo);
+        request.getRequestDispatcher("/consultarTorneoVista.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
