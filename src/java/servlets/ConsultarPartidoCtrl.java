@@ -41,7 +41,9 @@ public class ConsultarPartidoCtrl extends HttpServlet {
             response.sendRedirect("/TorneoTenisMesa/Admin/ConsultarTorneosCtrl");
             return;
         }
-        Partido partido = partidoDB.
+        Partido partido = partidoDB.buscarPartido(idPartido);
+        
+        request.setAttribute("partido", partido);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

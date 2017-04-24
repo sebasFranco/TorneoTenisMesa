@@ -43,6 +43,8 @@
     <servlet>
         <servlet-name>NumeroJugadoresCtrl</servlet-name>
         <servlet-class>servlets.NumeroJugadoresCtrl</servlet-class>
+    </servlet>
+    <servlet>  
         <servlet-name>ConsultarTorneoCtrl</servlet-name>
         <servlet-class>servlets.ConsultarTorneoCtrl</servlet-class>
     </servlet>
@@ -97,6 +99,8 @@
     <servlet-mapping>
         <servlet-name>NumeroJugadoresCtrl</servlet-name>
         <url-pattern>/NumeroJugadoresCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ConsultarTorneoCtrl</servlet-name>
         <url-pattern>/ConsultarTorneoCtrl</url-pattern>
     </servlet-mapping>
