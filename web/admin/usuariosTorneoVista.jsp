@@ -14,7 +14,8 @@
                 <div class="row">
                     <h2 class="text-center">Definir Jugadores</h2>
                     <form class="form-horizontal" action="/TorneoTenisMesa/admin/DefinirUsuariosTorneoCtrl" method="post" name="crearTorneo" id="crearTorneoForm">
-                        <div class="col-md-5">
+                        <fieldset id="jug" class="col-md-5">
+                            <div>
                                 <div class="form-group">
                                     <select name="jugadores" class="form-control" id="jugadores" multiple>
                                         <c:forEach items="${jugadores}" var="jugador">
@@ -22,20 +23,21 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                            <div class="form-group">
-                                <button type="button" id="agregarJugador" class="btn btn-success">Agregar Jugador</button>
-                                <button type="button" id="removerJugador" class="btn btn-success">Remover Jugador</button>
-                            </div>
-                            <div class="form-group">
-                                <select name="jugadoresSeleccionados" class="form-control" multiple id="jugadoresSeleccionados">
-                                    </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="button" id="confirmarJugadores" class="btn btn-success">Confirmar Jugadores</button>
-                            </div>
+                                <div class="form-group">
+                                    <button type="button" id="agregarJugador" class="btn btn-success">Agregar Jugador</button>
+                                    <button type="button" id="removerJugador" class="btn btn-success">Remover Jugador</button>
+                                </div>
+                                <div class="form-group">
+                                    <select name="jugadoresSeleccionados" class="form-control" multiple id="jugadoresSeleccionados">
+                                        </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" id="confirmarJugadores" class="btn btn-success">Confirmar Jugadores</button>
+                                </div>
 
-                        </div>
-                        <div class="col-md-5 col-md-offset-2 ">
+                            </div>
+                        </fieldset>
+                        <div class="col-md-5 col-md-offset-2 hide"id="arbit">
                             <div class="form-group">
                                     <select name="arbitros" class="form-control"  id="arbitros" multiple>
                                         <c:forEach items="${arbitros}" var="arbitro">
@@ -52,12 +54,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <button type="button" id="confirmarJugadores" class="btn btn-success">Confirmar Jugadores</button>
+                                <button type="button" id="confirmarArbitros" class="btn btn-success">Confirmar Arbitros</button>
                             </div>
                         </div>
                         <div id="listaJugadores"></div>
                         <div id="listaArbitros"></div>
-                        <button type="button" id="crearTorneo">Submit</button>
                     </form>
                 </div>
             </div>
@@ -66,7 +67,20 @@
         <script type="text/javascript">
             var cantidadJugadores = ${cantidadJugadores};
             var cantidadMesas = ${cantidadMesas};
-            $('#crearTorneo').click(function (){
+            
+            $(document).ready(function (){
+                var selectedOpts = $('#jugadores option:selected');
+                
+                $('#jugadores option').each(function (i,e){
+                    selectedOpts = $(e).val();
+                    $('#jugadoresSeleccionados').append($(selectedOpts).clone());
+                    $(selectedOpts).remove();
+                });
+                
+                
+            });
+            
+            $('#confirmarArbitros').click(function (){
                 $('#listaJugadores').html('');
                 $('#listaArbitros').html('');
                 $('#jugadoresSeleccionados option').each(function (i,e){
@@ -77,14 +91,19 @@
                     var input = '<input name="arbitrosSelec[]" type="hidden" value="' + $(e).val() + '"/>';
                     $('#listaArbitros').append(input);
                 });
-                $('#crearTorneoForm').submit();
+                
+                if($('#arbitrosSeleccionados option').length==0){
+                    alert('debe seleccionar los arbitros del torneo');
+                }else{
+                    $('#crearTorneoForm').submit();
+                }
             });
-             $('#agregarJugador').click(function(e) {
+        $('#agregarJugador').click(function(e) {
             var selectedOpts = $('#jugadores option:selected');
             if (selectedOpts.length == 0) {
                 alert("Nada para mover");
             }
-
+            
             $('#jugadoresSeleccionados').append($(selectedOpts).clone());
             $(selectedOpts).remove();
         });
@@ -115,6 +134,24 @@
             $('#arbitros').append($(selectedOpts).clone());
             $(selectedOpts).remove();
         });
+        
+        
+        $('#confirmarJugadores').click(function (e){
+            
+            if($('#jugadoresSeleccionados option').length!=cantidadJugadores){
+                alert('debe seleccionar '+cantidadJugadores+' jugadores del torneo');
+            }else if($('#jugadoresSeleccionados option').length==0){
+                alert('debe seleccionar los jugadores del torneo');
+            }else{
+                $('#arbit').removeClass('hide');
+                $('#jug').attr('disabled','');
+            }
+        });
+        
+        $('#confirmarArbitros').click(function (e){
+            
+        });
+        
         </script>
     </body>
 </html>

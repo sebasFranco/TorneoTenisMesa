@@ -41,6 +41,8 @@
         <servlet-class>servlets.CrearEstructuraCtrl</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>NumeroJugadoresCtrl</servlet-name>
+        <servlet-class>servlets.NumeroJugadoresCtrl</servlet-class>
         <servlet-name>ConsultarTorneoCtrl</servlet-name>
         <servlet-class>servlets.ConsultarTorneoCtrl</servlet-class>
     </servlet>
@@ -93,6 +95,8 @@
         <url-pattern>/admin/CrearEstructuraCtrl</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>NumeroJugadoresCtrl</servlet-name>
+        <url-pattern>/NumeroJugadoresCtrl</url-pattern>
         <servlet-name>ConsultarTorneoCtrl</servlet-name>
         <url-pattern>/ConsultarTorneoCtrl</url-pattern>
     </servlet-mapping>

@@ -65,6 +65,26 @@
             });
         </script>
         <script type="text/javascript">
+            var cantJ;
+            $(document).ready(function (){
+                $.ajax({
+                    url: "http://localhost:8084/TorneoTenisMesa/NumeroJugadoresCtrl",
+                    type: 'POST',
+                    dataType: "json",
+                    data: {},
+                    success: function(data, textStatus){
+                        cantJ=data;
+                    },
+                    error: function(data, textStatus, extra) {
+                        var errorText = data.responseDetails;
+                        if (errorText == undefined){
+                            errorText = data.responseText;
+                        }
+                        alert(errorText);
+                    }
+                });
+            });
+            
             $("#crearTorneo").click(function () {
                 var nombre = $("input[name='nombre']").val().trim();
                 var estructura = $("select[name='estructura']").val();
@@ -72,7 +92,7 @@
                 var numeroMesas = $("input[name='numeroMesas']").val().trim()
                 var error = false;
                    
-                if(nombre==''||estructura=='--'||numeroJugadores==''||numeroMesas){
+                if(nombre==''||estructura=='--'||numeroJugadores==''||numeroMesas==''){
                     alert("Todos los campos deben estar llenos");
                     error = true;
                 }
@@ -87,13 +107,36 @@
                     error = true
                 }
                 
+                var numA = Math.pow(2,(Math.floor(((Math.log(numeroJugadores)))/(Math.log(2)))));
+                var numC;
+                var x;
+                
+                for(var i=numeroJugadores;i>0;i--){
+                    x=i%4;
+                    if(x==0){
+                        numC=i;
+                        break;
+                    }
+                }
+                
+                if(numeroJugadores<8){
+                    alert("El numero minimo de jugadores para crear un torneo debe ser 8");
+                    error = true
+                }else if(numeroJugadores>cantJ){
+                    alert("El numero maximo de jugadores para crear un torneo no debe ser mayor a: "+cantJ);
+                    error = true
+                }else if(estructura==1 && numeroJugadores>numA){
+                    alert("Para la esturctura arbol el numero maximo de jugadores no puede ser mayor a: "+numA);
+                    error = true
+                }else if(estructura==2 && numeroJugadores>numC){
+                    alert("Para la esturctura cuadros el numero maximo de jugadores no puede ser mayor a: "+numC);
+                    error = true
+                }
+                
                 if(error==false){
                     $('#crearTorneoForm').submit();
                 }                
             });
-            
-            
-            
         </script>
     </body>
 </html>
