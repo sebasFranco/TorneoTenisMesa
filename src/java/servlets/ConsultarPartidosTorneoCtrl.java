@@ -6,25 +6,22 @@
 
 package servlets;
 
-import db.TorneoDB;
-import db.UsuarioDB;
+import db.PartidoDB;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Torneo;
-import modelo.Usuario;
+import modelo.Partido;
 
 /**
  *
  * @author DELL
  */
-public class UsuariosTorneoCtrl extends HttpServlet {
-    UsuarioDB usuarioDB = new UsuarioDB();
-    TorneoDB torneoDB = new TorneoDB();
+public class ConsultarPartidosTorneoCtrl extends HttpServlet {
+    PartidoDB partidoDB = new PartidoDB();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,15 +35,18 @@ public class UsuariosTorneoCtrl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session =  request.getSession();
-        Torneo torneo = (Torneo) session.getAttribute("torneoSession");
-        ArrayList<Usuario> jugadores = usuarioDB.getJugadores();
-        ArrayList<Usuario> arbitros = usuarioDB.getArbitros();
-        request.setAttribute("jugadores", jugadores);
-        request.setAttribute("arbitros", arbitros);
-        request.setAttribute("cantidadJugadores", torneo.getCantidadJugadores());
-        request.setAttribute("cantidadMesas", torneo.getCantidadMesas());
-        request.getRequestDispatcher("/admin/usuariosTorneoVista.jsp").forward(request, response);
+        int idTorneo;
+        try {
+            idTorneo = Integer.parseInt(request.getParameter("idTorneo"));
+        } catch (NumberFormatException e) {
+            response.sendRedirect("/TorneoTenisMesa/Admin/ConsultarTorneosCtrl");
+            return;
+        }
+
+        ArrayList<Partido> partidos = partidoDB.getAllPartidos(idTorneo);
+        
+        request.setAttribute("partidos", partidos);
+        request.getRequestDispatcher("/arbitro/consultarPartidosTorneoVista.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

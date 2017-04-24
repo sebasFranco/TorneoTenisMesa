@@ -40,6 +40,18 @@
         <servlet-name>CrearEstructuraCtrl</servlet-name>
         <servlet-class>servlets.CrearEstructuraCtrl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarTorneoCtrl</servlet-name>
+        <servlet-class>servlets.ConsultarTorneoCtrl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConsultarPartidosTorneoCtrl</servlet-name>
+        <servlet-class>servlets.ConsultarPartidosTorneoCtrl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConsultarPartidoCtrl</servlet-name>
+        <servlet-class>servlets.ConsultarPartidoCtrl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
         <url-pattern>/IniciarSesion</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>CrearEstructuraCtrl</servlet-name>
         <url-pattern>/admin/CrearEstructuraCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarTorneoCtrl</servlet-name>
+        <url-pattern>/ConsultarTorneoCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarPartidosTorneoCtrl</servlet-name>
+        <url-pattern>/ConsultarPartidosTorneoCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarPartidoCtrl</servlet-name>
+        <url-pattern>/ConsultarPartidoCtrl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
