@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `torneotenismesa` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `torneotenismesa`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: torneotenismesa
@@ -47,14 +49,14 @@ DROP TABLE IF EXISTS `partido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `partido` (
-  `idPartido` int(11) NOT NULL,
+  `idPartido` int(11) NOT NULL AUTO_INCREMENT,
   `fechaHora` datetime NOT NULL,
   `idTorneo` int(11) NOT NULL,
   `idPartidoTorneo` int(11) NOT NULL,
   PRIMARY KEY (`idPartido`),
   KEY `fkPartidoTorneo_idx` (`idTorneo`),
   CONSTRAINT `fkPartidoTorneo` FOREIGN KEY (`idTorneo`) REFERENCES `torneo` (`idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,6 +65,7 @@ CREATE TABLE `partido` (
 
 LOCK TABLES `partido` WRITE;
 /*!40000 ALTER TABLE `partido` DISABLE KEYS */;
+INSERT INTO `partido` VALUES (1,'2017-04-23 16:00:00',1,1),(2,'2017-04-23 17:00:00',1,2);
 /*!40000 ALTER TABLE `partido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,6 +154,7 @@ CREATE TABLE `usuariopartido` (
 
 LOCK TABLES `usuariopartido` WRITE;
 /*!40000 ALTER TABLE `usuariopartido` DISABLE KEYS */;
+INSERT INTO `usuariopartido` VALUES (1,3,NULL),(1,7,NULL),(1,8,NULL),(2,7,NULL),(2,8,NULL),(2,10,NULL);
 /*!40000 ALTER TABLE `usuariopartido` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -163,4 +167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-23 14:42:04
+-- Dump completed on 2017-04-24 19:48:15
