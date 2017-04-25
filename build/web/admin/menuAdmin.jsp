@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/Admin/ConsultarUsuariosCtrl">Consultar Usuarios</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/Admin/ConsultarUsuarios">Consultar Usuarios</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/TorneoTenisMesa/ConsultarTorneosCtrl">Consultar Torneos</a>
