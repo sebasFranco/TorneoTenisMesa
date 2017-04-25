@@ -10,14 +10,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Estructura;
 import modelo.FactoriaEstructura;
 import modelo.Partido;
 import modelo.Torneo;
 import services.DBManager;
+import servlets.ModificarUsuarioCtrl;
 
 /**
  *
@@ -44,9 +51,8 @@ public class PartidoDB {
 " join usuario u on u.idUsuario = up.idUsuario" +
 " where up.idPartido = ?" +
 " group by p.idPartido";
-/**
- * Crear consulta para traer un partido
- */
+
+    private final String SQL_UPDATE = "UPDATE Partido SET fechaHora=? WHERE idPartido=?";
     private final String SQL_SELECT_ID = "SELECT t.*,e.nombre FROM " + TABLE_NAME + "  t JOIN estructura e ON e.idEstructura = t.idEstructura WHERE t.idTorneo = ?";
 
     public PartidoDB() {
@@ -78,7 +84,15 @@ public class PartidoDB {
                 i = 1;
                 partido = new Partido();
                 partido.setIdPartido(rs.getInt(i++));
-                partido.setFechaHora(rs.getDate(i++));
+                DateFormat format = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+        Date date = null;
+        String fechaHora = rs.getString(i++);
+        try {
+            date = format.parse(fechaHora);
+        } catch (ParseException ex) {
+            Logger.getLogger(ModificarUsuarioCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        partido.setFechaHora(date);
                 partido.setIdPartidoTorneo(rs.getInt(i++));
                 Scanner scanner = new Scanner(rs.getString(i++));
                 while (scanner.hasNextInt()) {
@@ -150,7 +164,15 @@ public class PartidoDB {
                 i = 1;
                 partido = new Partido();
                 partido.setIdPartido(rs.getInt(i++));
-                partido.setFechaHora(rs.getDate(i++));
+                DateFormat format = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+        Date date = null;
+        String fechaHora = rs.getString(i++);
+        try {
+            date = format.parse(fechaHora);
+        } catch (ParseException ex) {
+            Logger.getLogger(ModificarUsuarioCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        partido.setFechaHora(date);
                 partido.setIdPartidoTorneo(rs.getInt(i++));
                 Scanner scanner = new Scanner(rs.getString(i++));
                 while (scanner.hasNextInt()) {
@@ -194,5 +216,27 @@ public class PartidoDB {
             DBManager.close(connection);
         }
         return partido;
+    }
+    
+    public int update(Partido partido){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int rows = 0;
+        try {
+            connection = DBManager.getConnection();
+            System.out.println("Ejecutando query:" + SQL_UPDATE);
+            statement = connection.prepareStatement(SQL_UPDATE);
+            int index = 1;
+            statement.setString(index++, partido.getFechaHoraFull());
+            statement.setInt(index++, partido.getIdPartido());
+            rows = statement.executeUpdate();
+            System.out.println("Registros actualizados:" + rows);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }finally{
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        return rows;
     }
 }

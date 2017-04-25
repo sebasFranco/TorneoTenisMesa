@@ -44,7 +44,7 @@
         <servlet-name>NumeroJugadoresCtrl</servlet-name>
         <servlet-class>servlets.NumeroJugadoresCtrl</servlet-class>
     </servlet>
-    <servlet>  
+    <servlet>
         <servlet-name>ConsultarTorneoCtrl</servlet-name>
         <servlet-class>servlets.ConsultarTorneoCtrl</servlet-class>
     </servlet>
@@ -55,6 +55,10 @@
     <servlet>
         <servlet-name>ConsultarPartidoCtrl</servlet-name>
         <servlet-class>servlets.ConsultarPartidoCtrl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarPartidoCtrl</servlet-name>
+        <servlet-class>servlets.ModificarPartidoCtrl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>ConsultarPartidoCtrl</servlet-name>
         <url-pattern>/ConsultarPartidoCtrl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarPartidoCtrl</servlet-name>
+        <url-pattern>/ModificarPartidoCtrl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

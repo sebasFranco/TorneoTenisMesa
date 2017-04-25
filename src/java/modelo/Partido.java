@@ -92,5 +92,8 @@ public class Partido {
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         return dt1.format(this.getFechaHora());
     }
-	
+    public String getFechaHoraFull(){
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return dt1.format(this.getFechaHora());
+    }
 }//end Partido
