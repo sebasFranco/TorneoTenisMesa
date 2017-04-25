@@ -19,7 +19,7 @@
                             </div>
                         </c:if>                        
                         <p>Seleccione el tipo de usuario a crear</p>
-                        <form class="form-horizontal" action="/TorneoTenisMesa/ModificarPartidoCtrl" method="post" name="addUser" id='modificarPartidoForm'>
+                        <form class="form-horizontal" action="/TorneoTenisMesa/ModificarPartidoCtrl" method="post" name="addUser" id='modificarPartidoForm' >
                             <div id="customer_fields" class="user_fields">
                             <div class="form-group">
                                 <label for="idPartidoTorneo" class="col-sm-4 control-label"># Partido</label>
@@ -31,7 +31,7 @@
                                 <label for="fechaHora" class="col-sm-4 control-label">Fecha-Hora</label>
                                 <div class="col-sm-8">
                                     <div class="input-group datetimepicker">
-                                        <input type="text" class="form-control" id="fechaHora" name="fechaHora" value="${partido.fechaHoraF}">
+                                        <input type="text" class="form-control" id="fechaHora" name="fechaHora" value="${partido.fechaHoraF}" onkeyup="valida(this,16)">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button">
                                               <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -67,9 +67,37 @@
         </section>
         <jsp:include page="_footer.jsp"/>
         <script type="text/javascript">
+            function valida(btn,tam)
+            {
+                
+                var largo=btn.value.length
+
+                if (largo > tam){
+                    btn.value = btn.value.substring(0,tam-1)+"0"
+                }
+            }
             $('#crearUsuario').click(function (){
-                $('#modificarPartidoForm').submit();
-            });
+                var error =  false
+                
+                
+                if($('#fechaHora').val().length!=16){
+                    alert("La fecha esta incompleta");
+                    error = true
+                }
+                                
+                if(f.search(/[a-z]/g)!=-1){
+                    alert("la fecha no debe contener letras");
+                    error = true
+                }
+         
+                if(!error){
+                    $('#modificarPartidoForm').submit();
+                }
+                
+             });
+            
+            
+            
         </script>
     </body>
 </html>
