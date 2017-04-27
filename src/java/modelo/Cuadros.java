@@ -12,7 +12,12 @@ public class Cuadros extends Estructura {
 	}
 
     @Override
-    public services.Arbol crearEstructura(int cantidadJugadores) {
+    public void crearEstructura(int cantidadJugadores) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getCantidadPartidos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

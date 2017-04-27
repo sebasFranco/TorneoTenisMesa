@@ -18,7 +18,9 @@ public abstract class Estructura {
 	 * @param modalidad
 	 * @param cantidadJugadores
 	 */
-	public abstract services.Arbol crearEstructura(int cantidadJugadores);
+	public abstract void crearEstructura(int cantidadJugadores);
+        
+        public abstract int getCantidadPartidos();
 
     public int getIdEstructura() {
         return idEstructura;

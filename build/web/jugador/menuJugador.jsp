@@ -15,7 +15,7 @@
                         <a class="page-scroll" href="/TorneoTenisMesa/ConsultarTorneosCtrl">Consultar Torneos</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarUsuarioCtrl">Perfil</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarUsuario">Perfil</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/TorneoTenisMesa/CerrarSesion">Cerrar Sesi&oacute;n</a>
