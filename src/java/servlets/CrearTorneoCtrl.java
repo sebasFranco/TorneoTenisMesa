@@ -39,13 +39,14 @@ public class CrearTorneoCtrl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         Torneo torneo = new Torneo();
-        String nombre,tipoEstructura,numeroJugadores,numeroMesas,nombreEstructura;
+        String nombre,tipoEstructura,numeroJugadores,numeroMesas,nombreEstructura,fechaHora;
         int cantidadJugadores = 0, cantidadMesas = 0, tipoEstructuraInt = 0, idTorneo;
         nombre = request.getParameter("nombre");
         tipoEstructura = request.getParameter("estructura");
         numeroJugadores = request.getParameter("numeroJugadores");
         numeroMesas = request.getParameter("numeroMesas");
         nombreEstructura = request.getParameter("nombreEstructura");
+        fechaHora = request.getParameter("fechaHora");
         try {
             cantidadJugadores = Integer.parseInt(numeroJugadores);
             cantidadMesas = Integer.parseInt(numeroMesas);
@@ -65,6 +66,7 @@ public class CrearTorneoCtrl extends HttpServlet {
         if (idTorneo > 0) {
             torneo.setIdTorneo(idTorneo);
             session.setAttribute("torneoSession", torneo);
+            session.setAttribute("fechaHoraTorneoSession", fechaHora);
             response.sendRedirect("/TorneoTenisMesa/admin/UsuariosTorneoCtrl");
             return;
         }

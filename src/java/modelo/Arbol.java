@@ -9,14 +9,15 @@ import services.Nodo;
  * @created 10-abr.-2017 11:34:17 p. m.
  */
 public class Arbol extends Estructura {
+    private services.Arbol arbol;
 
 	public Arbol(){
             this.setIdEstructura(FactoriaEstructura.ESTRUCTURA_ARBOL);
 	}
 
     @Override
-    public services.Arbol crearEstructura(int cantidadJugadores) {
-        return crearArbol(cantidadJugadores/2);
+    public void crearEstructura(int cantidadJugadores) {
+        arbol = crearArbol(cantidadJugadores/2);
     }
     
     private services.Arbol crearArbol(int cantidadPartidosInicio) {
@@ -51,5 +52,10 @@ public class Arbol extends Estructura {
             n = nodos.get(0);
         }
         return n;
+    }
+
+    @Override
+    public int getCantidadPartidos() {
+        return arbol.cantidad();
     }
 }//end Arbol

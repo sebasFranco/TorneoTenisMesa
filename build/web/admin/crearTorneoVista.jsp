@@ -45,6 +45,21 @@
                                     <input type="text" class="form-control" id="numeroMesas" name="numeroMesas" placeholder="Numero Mesas">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="fechaHora" class="col-sm-4 control-label">Fecha-Hora</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group datetimepicker">
+                                        <input type="text" class="form-control" id="fechaHora" name="fechaHora" onkeyup="valida(this,16)">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">
+                                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
+                                        
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
                                 <div class="form-group text-right">
                                     <div class="col-sm-offset-4 col-sm-8">
                                         <button id="crearTorneo" type="button" class="btn btn-success btn-lg">Crear</button>
@@ -65,10 +80,22 @@
             });
         </script>
         <script type="text/javascript">
+            function valida(btn,tam)
+            {
+                
+                var largo=btn.value.length
+
+                if (largo > tam){
+                    btn.value = btn.value.substring(0,tam-1)+"0"
+                }
+            }
             var cantJ;
             $(document).ready(function (){
+                var date = new Date();
+                var dateFormated = date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0"+(date.getDate()+1)).slice(-2)+" "+date.getHours()+":"+date.getMinutes();
+                $('#fechaHora').val(dateFormated);
                 $.ajax({
-                    url: "http://localhost:8084/TorneoTenisMesa/NumeroJugadoresCtrl",
+                    url: "/TorneoTenisMesa/NumeroJugadoresCtrl",
                     type: 'POST',
                     dataType: "json",
                     data: {},
@@ -104,6 +131,11 @@
                 
                 if(isNaN(numeroMesas)){
                     alert("El número de mesas no debe contener letras o caracteres especiales");
+                    error = true
+                }
+                
+                if($('#fechaHora').val().length!=16){
+                    alert("La fecha esta incompleta");
                     error = true
                 }
                 

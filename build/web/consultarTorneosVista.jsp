@@ -21,7 +21,7 @@
         </style>
     </head>
     <body id="page-top" class="index background">
-        <%--<jsp:include page="menuAdmin.jsp" />--%>
+        <jsp:include page="admin/menuAdmin.jsp" />
         <section >
             <div class="container">
                 <div class="row">
