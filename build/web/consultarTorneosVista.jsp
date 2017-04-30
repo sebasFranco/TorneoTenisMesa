@@ -5,7 +5,7 @@
     <head>
         <jsp:include page="_head.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Torneo de tenis de mesa-Admin</title>
+        <title>Torneo de tenis de mesa-Admin</title>          
         <style type="text/css">
             .square {
             width: 20px;
@@ -21,7 +21,18 @@
         </style>
     </head>
     <body id="page-top" class="index background">
-        <jsp:include page="admin/menuAdmin.jsp" />
+        <c:if test="${tipo==1}">
+                <jsp:include page="/jugador/menuJugador.jsp" />
+            </c:if>
+            <c:if test="${tipo==2}">
+                <jsp:include page="/arbitro/menuArbitro.jsp" />
+            </c:if>
+            <c:if test="${tipo==3}">
+                <jsp:include page="/admin/menuAdmin.jsp" />
+            </c:if>
+            <c:if test="${tipo==4}">
+                <jsp:include page="/apostador/menuApostador.jsp" />
+            </c:if>
         <section >
             <div class="container">
                 <div class="row">
