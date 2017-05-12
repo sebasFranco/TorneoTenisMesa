@@ -81,6 +81,26 @@
                 <a href="iniciarSesionVista.jsp?tipo=apostador" class="btn btn-outline btn-xl page-scroll">Iniciar sesion</a>
             </div>
         </div>
+
+        <div class="col-md-8">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-item">
+                            <h3></h3>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-item">
+                            <i class="icon-lock-open text-primary"></i>
+                            <h3>Registrese</h3>
+                            <a href="Apostador/CrearUsuario" class="btn btn-outline btn page-scroll">Crear nuevo usuario</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <footer>
