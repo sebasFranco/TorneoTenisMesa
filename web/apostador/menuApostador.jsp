@@ -14,6 +14,9 @@
                         <a class="page-scroll" href="/TorneoTenisMesa/ConsultarTorneosCtrl">Consultar Torneos</a>
                     </li>
                     <li>
+                        <a class="page-scroll" href="Apostador/Apuestas">Apuestas</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="/TorneoTenisMesa/ConsultarUsuario">Perfil</a>
                     </li>
                     <li>

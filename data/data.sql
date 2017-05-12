@@ -168,3 +168,19 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-04-24 19:48:15
+
+
+--Se agrega la tabla de apuestas
+create table apuesta
+(
+idApuesta int(11) not null auto_increment, 
+idUsuario int(11) not null, 
+idPartido int(11) not null,
+estado enum('Abierta','Cerrada','Anulada'), 
+valor int(20), 
+fechaCreacion timestamp, 
+fechaCierre datetime,
+PRIMARY KEY (idApuesta),
+CONSTRAINT fkApuestaUsuario FOREIGN KEY (idUsuario) REFERENCES usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT fkApuestaPartido FOREIGN KEY (idPartido) REFERENCES partido (idPartido) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
