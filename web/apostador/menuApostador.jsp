@@ -11,10 +11,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="/TorneoTenisMesa/ConsultarTorneosCtrl">Consultar Torneos</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/Apostador/ConsultarTorneos">Consultar Torneos</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="Apostador/Apuestas">Apuestas</a>
+                        <a class="page-scroll" href="/TorneoTenisMesa/Apostador/Apuestas">Apuestas</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/TorneoTenisMesa/ConsultarUsuario">Perfil</a>
