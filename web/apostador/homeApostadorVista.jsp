@@ -34,7 +34,7 @@
                             <div class="device">
                                 <div class="screen">
                                     <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                    <img src="/TorneoTenisMesa/assets/pic/bg-cta.jpg" class="img-responsive" alt="">
+                                    <img src="/TorneoTenisMesa/assets/img/bg-cta.jpg" class="img-responsive" alt="">
                                 </div>
                                 <div class="button">
                                     <!-- You can hook the "home button" to some JavaScript events or just remove it -->

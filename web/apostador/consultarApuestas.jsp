@@ -32,36 +32,36 @@
                         </c:if>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <h3 class="">Torneos</h3>
+                                    <h3 class="">Apuestas</h3>
                                 </div>
                             </div>
                         
                         <c:choose>
-                            <c:when test="${torneos==null}">
-                                No hay torneos
+                            <c:when test="${apuestas==null}">
+                                No hay apuestas
                             </c:when>
                             <c:otherwise>
                                 <table class="table table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>Id Torneo</th>
-                                            <th>Nombre</th>
-                                            <th>Estructura</th>
-                                            <th># Jugadores</th>
-                                            <th># Mesas</th>
+                                            <th>Id Apuesta</th>
+                                            <th>Id Partido</th>
+                                            <th>Estado</th>
+                                            <th>Valor</th>
+                                            <th>Creaci&oacute;n</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${torneos}" var="torneo">
+                                        <c:forEach items="${apuestas}" var="apuesta">
                                         <tr>
-                                            <td>${torneo.idTorneo}</td>
-                                            <td>${torneo.nombre}</td>
-                                            <td>${torneo.estructura.nombre}</td>
-                                            <td>${torneo.cantidadJugadores}</td>
-                                            <td>${torneo.cantidadMesas}</td>
+                                            <td>${apuesta.idApuesta}</td>
+                                            <td>${apuesta.idPartido}</td>
+                                            <td>${apuesta.estado}</td>
+                                            <td>${apuesta.valor}</td>
+                                            <td>${apuesta.fechaCreacion}</td>
                                             <td>
-                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/ConsultarTorneoCtrl?idTorneo=${torneo.idTorneo}">Consultar</a>
+                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/Apostador/Apuesta?idApuesta=${apuesta.idApuesta}">Consultar</a>
                                             </td>
                                         </tr>
                                         </c:forEach>

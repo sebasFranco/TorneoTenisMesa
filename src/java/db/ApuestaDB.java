@@ -26,8 +26,9 @@ public class ApuestaDB {
     private final String FIELDS = "idUsuario, idPartido, estado, valor, fechaCreacion, fechaCierre";
     private final String SQL_INSERT = "INSERT INTO " + TABLE_NAME +" ("+FIELDS+") VALUES (?,?,?,?,?,?)";
     private final String SQL_INSERT_ID = "SELECT @@identity AS id";
-    private final String SQL_UPDATE = "UPDATE "+TABLE_NAME+" SET estado=?, valor=?, fechaCreacion=?, fechaCierre=? WHERE "+ID_FIELD+"=?";
+    private final String SQL_UPDATE = "UPDATE "+TABLE_NAME+" SET idUsuario=?, idPartido=?, estado=?, valor=?, fechaCierre=? WHERE "+ID_FIELD+"=?";
     private final String SQL_SELECT_ID = "SELECT "+FIELDS+" FROM " + TABLE_NAME + " WHERE "+ID_FIELD+"=?";
+    private final String SQL_SELECT_USER = "SELECT "+ID_FIELD + "," +FIELDS+" FROM " + TABLE_NAME + " WHERE idUsuario=?";
 
     public ApuestaDB() {
     }
@@ -35,7 +36,7 @@ public class ApuestaDB {
     public int insert(Apuesta apuesta){
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet rs;
+        ResultSet rs = null;
         int rows, idApuesta = 0;
         try {
             connection = DBManager.getConnection();
@@ -59,10 +60,111 @@ public class ApuestaDB {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "insert", ex);
         }finally{
+            DBManager.close(rs);
             DBManager.close(statement);
             DBManager.close(connection);
         }
         return idApuesta;
+    }
+    
+    public int update(Apuesta apuesta){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        int rows = 0;
+        try {
+            connection = DBManager.getConnection();
+            statement = connection.prepareStatement(SQL_UPDATE);
+            statement.setInt(1, apuesta.getIdUsuario());
+            statement.setInt(2, apuesta.getIdPartido());
+            statement.setString(3, apuesta.getEstado());
+            statement.setInt(4, apuesta.getValor());
+            statement.setObject(5, apuesta.getFechaCierre());
+            statement.setInt(6, apuesta.getIdApuesta());
+            LOGGER.log(Level.INFO, "Ejecutando query " + SQL_INSERT);
+            rows = statement.executeUpdate();
+            LOGGER.log(Level.INFO, "Registro afectados {0}", rows);
+            
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "insert", ex);
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        return rows;
+    }
+    
+    
+    public java.util.List<Apuesta> getApuestasByUser(int idUser){
+        java.util.List<Apuesta> list = new java.util.Stack<Apuesta>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        Apuesta apuesta = null;
+        
+        try {
+            connection = DBManager.getConnection();
+            LOGGER.log(Level.INFO, "Ejecutando el query " +SQL_SELECT_USER);
+            statement = connection.prepareStatement(SQL_SELECT_USER);
+            statement.setInt(1, idUser);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                //idUsuario, idPartido, estado, valor, fechaCreacion, fechaCierre
+                apuesta = new Apuesta();
+                apuesta.setEstado(rs.getString("estado"));
+                apuesta.setFechaCierre(rs.getDate("fechaCierre"));
+                apuesta.setFechaCreacion(rs.getDate("fechaCreacion"));
+                apuesta.setIdApuesta(rs.getInt("idApuesta"));
+                apuesta.setIdPartido(rs.getInt("idPartido"));
+                apuesta.setIdUsuario(rs.getInt("idUsuario"));
+                apuesta.setValor(rs.getInt("valor"));
+                
+                list.add(apuesta);
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "getApuestasByUser", ex);
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        
+        return list;
+    }
+    
+    public Apuesta getById(int idApuesta){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        Apuesta apuesta = null;
+        
+        try {
+            connection = DBManager.getConnection();
+            LOGGER.log(Level.INFO, "Ejecutando el query " +SQL_SELECT_ID);
+            statement = connection.prepareStatement(SQL_SELECT_ID);
+            statement.setInt(1, idApuesta);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                //idUsuario, idPartido, estado, valor, fechaCreacion, fechaCierre
+                apuesta = new Apuesta();
+                apuesta.setEstado(rs.getString("estado"));
+                apuesta.setFechaCierre(rs.getDate("fechaCierre"));
+                apuesta.setFechaCreacion(rs.getDate("fechaCreacion"));
+                apuesta.setIdApuesta(idApuesta);
+                apuesta.setIdPartido(rs.getInt("idPartido"));
+                apuesta.setIdUsuario(rs.getInt("idUsuario"));
+                apuesta.setValor(rs.getInt("valor"));
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "getById", ex);
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        
+        return apuesta;
     }
     
 }

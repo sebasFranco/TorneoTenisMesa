@@ -14,19 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.Apuesta;
-import modelo.Usuario;
 import services.ValidarSesion;
 
 /**
  *
  * @author rm-rf
  */
-@WebServlet(name = "Apuestas", urlPatterns = {"/Apostador/Apuestas"})
-public class Apuestas extends HttpServlet {
+@WebServlet(name = "Apuesta", urlPatterns = {"/Apostador/Apuesta"})
+public class Apuesta extends HttpServlet {
     
-    private final static java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(Apuestas.class.getName());
-    
+    private final static java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(CrearApuesta.class.getName());
     private ApuestaDB apuestaDB = new ApuestaDB();
 
     /**
@@ -41,16 +38,25 @@ public class Apuestas extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.log(Level.INFO, "Consultando las apuestas");
         HttpSession session = request.getSession();
-        boolean isValid = ValidarSesion.validar(session);
-        LOGGER.log(Level.INFO, "Tipo de usuario {0}", isValid);
-        if (isValid){
-            Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
-            java.util.List<Apuesta> lista = apuestaDB.getApuestasByUser(usuario.getIdUsuario());
-            LOGGER.log(Level.INFO, "Se retorna la lista con los siguientes valores {0}", lista);
-            request.setAttribute("apuestas", lista);
-            request.getRequestDispatcher("/apostador/consultarApuestas.jsp").forward(request, response);
+        boolean sessionValida = ValidarSesion.validar(session);
+        LOGGER.log(Level.INFO, "Tipo de usuario {0}", sessionValida);
+        request.setAttribute("tipo",sessionValida);
+        if (sessionValida){
+            String idApuesta = request.getParameter("idApuesta");
+            LOGGER.log(Level.INFO, "Partido {0}", idApuesta);
+
+            if (request.getParameter("apuesta") != null){
+                String valApuesta = request.getParameter("apuesta");
+                LOGGER.log(Level.INFO, "Valor de la apuesta {0}", valApuesta);
+                modelo.Apuesta apUpdate = apuestaDB.getById(Integer.parseInt(idApuesta));
+                //enum('Abierta','Cerrada','Anulada')
+                apUpdate.setValor(Integer.parseInt(valApuesta));
+                int idAp = apuestaDB.update(apUpdate);
+                request.setAttribute("idApuesta", idAp);
+            }
+
+            request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);
         }else{
             request.getSession().invalidate();
             request.getRequestDispatcher("/").forward(request, response);
@@ -70,7 +76,6 @@ public class Apuestas extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        //request.getRequestDispatcher("/apostador/consultarApuestas.jsp").forward(request, response);
     }
 
     /**
