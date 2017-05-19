@@ -5,20 +5,30 @@
  */
 package servlets.apostador;
 
+import db.ApuestaDB;
+import db.PartidoDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modelo.Apuesta;
+import modelo.Usuario;
+import services.ValidarSesion;
 
 /**
  *
  * @author rm-rf
  */
-@WebServlet(name = "CrearApuesta", urlPatterns = {"/CrearApuesta"})
+@WebServlet(name = "CrearApuesta", urlPatterns = {"/Apostador/CrearApuesta"})
 public class CrearApuesta extends HttpServlet {
+    
+    private final static java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(CrearApuesta.class.getName());
+    private ApuestaDB apuestaDB = new ApuestaDB();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,20 +42,35 @@ public class CrearApuesta extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CrearApuesta</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CrearApuesta at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+        HttpSession session = request.getSession();
+        boolean sessionValida = ValidarSesion.validar(session);
+        LOGGER.log(Level.INFO, "Tipo de usuario {0}", sessionValida);
+        request.setAttribute("tipo",sessionValida);
+        if (sessionValida){
+            String partido = request.getParameter("idPartido");
+            LOGGER.log(Level.INFO, "Partido {0}", partido);
+
+            if (request.getParameter("apuesta") != null){
+                String valApuesta = request.getParameter("apuesta");
+                LOGGER.log(Level.INFO, "Valor de la apuesta {0}", valApuesta);
+                Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+                Apuesta apuesta = new Apuesta();
+                //enum('Abierta','Cerrada','Anulada')
+                apuesta.setEstado("Abierta");
+                apuesta.setFechaCreacion(new java.util.Date());
+                apuesta.setIdPartido(Integer.parseInt(partido));
+                apuesta.setIdUsuario(usuario.getIdUsuario());
+                apuesta.setValor(Integer.parseInt(valApuesta));
+                
+                int idAp = apuestaDB.insert(apuesta);
+                
+                request.setAttribute("idApuesta", idAp);
+            }
+
+            request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);
+        }else{
+            request.getSession().invalidate();
+            request.getRequestDispatcher("/").forward(request, response);
         }
     }
 

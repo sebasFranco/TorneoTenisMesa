@@ -61,7 +61,7 @@
                                             <td>${partido.idJugador2}</td>
                                             <td>${partido.idArbitro}</td>
                                             <td>
-                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/ConsultarTorneoCtrl?idTorneo=${torneo.idTorneo}">Consultar</a>
+                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/Apostador/CrearApuesta?idPartido=${partido.idPartido}">Apostar</a>
                                             </td>
                                         </tr>
                                         </c:forEach>
