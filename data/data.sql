@@ -188,3 +188,23 @@ PRIMARY KEY (idApuesta),
 CONSTRAINT fkApuestaUsuario FOREIGN KEY (idUsuario) REFERENCES usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT fkApuestaPartido FOREIGN KEY (idPartido) REFERENCES partido (idPartido) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+
+
+
+delimiter ;
+drop trigger cu12_asignacionPremio
+;
+/*Trigger para el CU AT-12*/
+
+
+delimiter //
+CREATE TRIGGER cu12_asignacionPremio BEFORE UPDATE ON usuariopartido
+FOR EACH ROW
+BEGIN
+   IF NEW.resultado is not null THEN
+	/*Cierre de todos los partidos asociados en las apuestas*/
+	   update apuesta set fechaCierre = current_timestamp, estado = 'Cerrada' where idPartido = NEW.idPartido;
+   END IF;
+END;//
+delimiter ;
