@@ -49,6 +49,8 @@
                                             <th>Estado</th>
                                             <th>Valor</th>
                                             <th>Creaci&oacute;n</th>
+                                            <th>Ganador</th>
+                                            <th>Puntaje</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -60,8 +62,10 @@
                                             <td>${apuesta.estado}</td>
                                             <td>${apuesta.valor}</td>
                                             <td>${apuesta.fechaCreacion}</td>
+                                            <td>${apuesta.ganador}</td>
+                                            <td>${apuesta.puntaje}</td>
                                             <td>
-                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/Apostador/Apuesta?idApuesta=${apuesta.idApuesta}">Consultar</a>
+                                                <a class="btn btn-info btn-xs" href="/TorneoTenisMesa/Apostador/Apuesta?idApuesta=${apuesta.idApuesta}">Modificar</a>
                                             </td>
                                         </tr>
                                         </c:forEach>

@@ -171,6 +171,8 @@ UNLOCK TABLES;
 
 
 --Se agrega la tabla de apuestas
+--drop table apuesta
+
 create table apuesta
 (
 idApuesta int(11) not null auto_increment, 
@@ -180,6 +182,8 @@ estado enum('Abierta','Cerrada','Anulada'),
 valor int(20), 
 fechaCreacion timestamp, 
 fechaCierre datetime,
+ganador varchar(50),
+puntaje varchar(50),
 PRIMARY KEY (idApuesta),
 CONSTRAINT fkApuestaUsuario FOREIGN KEY (idUsuario) REFERENCES usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT fkApuestaPartido FOREIGN KEY (idPartido) REFERENCES partido (idPartido) ON DELETE NO ACTION ON UPDATE NO ACTION

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import modelo.Apuesta;
 import services.DBManager;
@@ -23,10 +24,10 @@ public class ApuestaDB {
     
     private final String TABLE_NAME = "apuesta";
     private final String ID_FIELD = "idApuesta";
-    private final String FIELDS = "idUsuario, idPartido, estado, valor, fechaCreacion, fechaCierre";
-    private final String SQL_INSERT = "INSERT INTO " + TABLE_NAME +" ("+FIELDS+") VALUES (?,?,?,?,?,?)";
+    private final String FIELDS = "idUsuario, idPartido, estado, valor, fechaCreacion, fechaCierre, ganador, puntaje";
+    private final String SQL_INSERT = "INSERT INTO " + TABLE_NAME +" ("+FIELDS+") VALUES (?,?,?,?,?,?,?,?)";
     private final String SQL_INSERT_ID = "SELECT @@identity AS id";
-    private final String SQL_UPDATE = "UPDATE "+TABLE_NAME+" SET idUsuario=?, idPartido=?, estado=?, valor=?, fechaCierre=? WHERE "+ID_FIELD+"=?";
+    private final String SQL_UPDATE = "UPDATE "+TABLE_NAME+" SET idUsuario=?, idPartido=?, estado=?, valor=?, fechaCierre=?, ganador=?, puntaje=? WHERE "+ID_FIELD+"=?";
     private final String SQL_SELECT_ID = "SELECT "+FIELDS+" FROM " + TABLE_NAME + " WHERE "+ID_FIELD+"=?";
     private final String SQL_SELECT_USER = "SELECT "+ID_FIELD + "," +FIELDS+" FROM " + TABLE_NAME + " WHERE idUsuario=?";
 
@@ -47,6 +48,8 @@ public class ApuestaDB {
             statement.setInt(4, apuesta.getValor());
             statement.setObject(5, apuesta.getFechaCreacion());
             statement.setObject(6, apuesta.getFechaCierre());
+            statement.setString(7, apuesta.getGanador());
+            statement.setString(8, apuesta.getPuntaje());
             
             LOGGER.log(Level.INFO, "Ejecutando query " + SQL_INSERT);
             rows = statement.executeUpdate();
@@ -80,7 +83,10 @@ public class ApuestaDB {
             statement.setString(3, apuesta.getEstado());
             statement.setInt(4, apuesta.getValor());
             statement.setObject(5, apuesta.getFechaCierre());
-            statement.setInt(6, apuesta.getIdApuesta());
+            statement.setString(6, apuesta.getGanador());
+            statement.setString(7, apuesta.getPuntaje());
+            
+            statement.setInt(8, apuesta.getIdApuesta());
             LOGGER.log(Level.INFO, "Ejecutando query " + SQL_INSERT);
             rows = statement.executeUpdate();
             LOGGER.log(Level.INFO, "Registro afectados {0}", rows);
@@ -119,6 +125,8 @@ public class ApuestaDB {
                 apuesta.setIdPartido(rs.getInt("idPartido"));
                 apuesta.setIdUsuario(rs.getInt("idUsuario"));
                 apuesta.setValor(rs.getInt("valor"));
+                apuesta.setGanador(rs.getString("ganador"));
+                apuesta.setPuntaje(rs.getString("puntaje"));
                 
                 list.add(apuesta);
             }
@@ -155,6 +163,8 @@ public class ApuestaDB {
                 apuesta.setIdPartido(rs.getInt("idPartido"));
                 apuesta.setIdUsuario(rs.getInt("idUsuario"));
                 apuesta.setValor(rs.getInt("valor"));
+                apuesta.setGanador(rs.getString("ganador"));
+                apuesta.setPuntaje(rs.getString("puntaje"));
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "getById", ex);
@@ -165,6 +175,38 @@ public class ApuestaDB {
         }
         
         return apuesta;
+    }
+
+    public List<String> infoPartido(int partido) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        java.util.List<String> usuarios = new java.util.Stack<String>();
+        
+        try {
+            connection = DBManager.getConnection();
+            String sql = "select ust.cedula cedula, ust.apellido apellido, ust.nombre nombre from usuariopartido usp left join usuario ust on usp.idUsuario = ust.idUsuario where usp.idPartido = ? and ust.tipo = 'Jugador'";
+            LOGGER.log(Level.INFO, "Ejecutando el query {0}", sql);
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, partido);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                String rest = rs.getString("cedula");
+                rest += " ";
+                rest += rs.getString("apellido");
+                rest += " ";
+                rest += rs.getString("nombre");
+                usuarios.add(rest);
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "infoPartido", ex);
+        }finally{
+            DBManager.close(rs);
+            DBManager.close(statement);
+            DBManager.close(connection);
+        }
+        
+        return usuarios;
     }
     
 }

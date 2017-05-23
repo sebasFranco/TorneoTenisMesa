@@ -44,19 +44,30 @@ public class Apuesta extends HttpServlet {
         request.setAttribute("tipo",sessionValida);
         if (sessionValida){
             String idApuesta = request.getParameter("idApuesta");
-            LOGGER.log(Level.INFO, "Partido {0}", idApuesta);
+            LOGGER.log(Level.INFO, "Apuesta {0}", idApuesta);
+            modelo.Apuesta apUpdate = apuestaDB.getById(Integer.parseInt(idApuesta));
+            
 
             if (request.getParameter("apuesta") != null){
                 String valApuesta = request.getParameter("apuesta");
-                LOGGER.log(Level.INFO, "Valor de la apuesta {0}", valApuesta);
-                modelo.Apuesta apUpdate = apuestaDB.getById(Integer.parseInt(idApuesta));
+                String valGanador = request.getParameter("ganador");
+                String valPuntaje = request.getParameter("puntaje");
+                LOGGER.log(Level.INFO, "Valor de la apuesta {0}, ganador {1} y puntaje {2}", new Object[]{valApuesta, valGanador, valPuntaje});
                 //enum('Abierta','Cerrada','Anulada')
                 apUpdate.setValor(Integer.parseInt(valApuesta));
+                apUpdate.setGanador(valGanador);
+                apUpdate.setPuntaje(valPuntaje);
+                
                 int idAp = apuestaDB.update(apUpdate);
                 request.setAttribute("idApuesta", idAp);
+                request.getRequestDispatcher("/Apostador/Apuestas").forward(request, response);
+            }else{
+                java.util.List<String> data = apuestaDB.infoPartido(apUpdate.getIdPartido());
+                request.setAttribute("usuario1", data.get(0));
+                request.setAttribute("usuario2", data.get(1));
+                request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);
             }
 
-            request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);
         }else{
             request.getSession().invalidate();
             request.getRequestDispatcher("/").forward(request, response);

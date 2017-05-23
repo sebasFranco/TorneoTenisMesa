@@ -20,6 +20,8 @@ public class Apuesta {
     private int valor;
     private java.util.Date fechaCreacion;
     private java.util.Date fechaCierre;
+    private String ganador;
+    private String puntaje;
 
     public Apuesta() {
     }
@@ -78,6 +80,22 @@ public class Apuesta {
 
     public void setIdPartido(int idPartido) {
         this.idPartido = idPartido;
+    }
+
+    public String getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(String ganador) {
+        this.ganador = ganador;
+    }
+
+    public String getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(String puntaje) {
+        this.puntaje = puntaje;
     }
 
     @Override

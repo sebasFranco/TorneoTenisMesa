@@ -26,6 +26,21 @@
                                     <input type="text" class="form-control" id="apuestaVal" name="apuesta" placeholder="Valor apuesta">
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <label for="ganador" class="col-sm-4 control-label">Ganador</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" class="form-horizontal" name="ganador" value="${usuario1}" checked> ${usuario1}<br>
+                                    <input type="radio" class="form-horizontal" name="ganador" value="${usuario2}"> ${usuario2}<br>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="puntaje" class="col-sm-4 control-label">Puntaje</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="apuestaPun" name="puntaje" placeholder="Puntaje" alt="Ejemplo: 0-1">
+                                </div>
+                            </div>
 
                             <div class="form-group text-right">
                                 <div class="col-sm-offset-4 col-sm-8">

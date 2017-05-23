@@ -6,9 +6,7 @@
 package servlets.apostador;
 
 import db.ApuestaDB;
-import db.PartidoDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +50,9 @@ public class CrearApuesta extends HttpServlet {
 
             if (request.getParameter("apuesta") != null){
                 String valApuesta = request.getParameter("apuesta");
-                LOGGER.log(Level.INFO, "Valor de la apuesta {0}", valApuesta);
+                String valGanador = request.getParameter("ganador");
+                String valPuntaje = request.getParameter("puntaje");
+                LOGGER.log(Level.INFO, "Valor de la apuesta {0}, ganador {1} y puntaje {2}", new Object[]{valApuesta, valGanador, valPuntaje});
                 Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
                 Apuesta apuesta = new Apuesta();
                 //enum('Abierta','Cerrada','Anulada')
@@ -61,13 +61,20 @@ public class CrearApuesta extends HttpServlet {
                 apuesta.setIdPartido(Integer.parseInt(partido));
                 apuesta.setIdUsuario(usuario.getIdUsuario());
                 apuesta.setValor(Integer.parseInt(valApuesta));
+                apuesta.setGanador(valGanador);
+                apuesta.setPuntaje(valPuntaje);
                 
                 int idAp = apuestaDB.insert(apuesta);
                 
                 request.setAttribute("idApuesta", idAp);
+                request.getRequestDispatcher("/Apostador/Apuestas").forward(request, response);
+            }else{
+                java.util.List<String> data = apuestaDB.infoPartido(Integer.parseInt(partido));
+                request.setAttribute("usuario1", data.get(0));
+                request.setAttribute("usuario2", data.get(1));
+                request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);
             }
 
-            request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);
         }else{
             request.getSession().invalidate();
             request.getRequestDispatcher("/").forward(request, response);
