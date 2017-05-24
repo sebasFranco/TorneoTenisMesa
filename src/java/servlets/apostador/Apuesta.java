@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Usuario;
 import services.ValidarSesion;
 
 /**
@@ -62,7 +63,7 @@ public class Apuesta extends HttpServlet {
                 request.setAttribute("idApuesta", idAp);
                 request.getRequestDispatcher("/Apostador/Apuestas").forward(request, response);
             }else{
-                java.util.List<String> data = apuestaDB.infoPartido(apUpdate.getIdPartido());
+                java.util.List<Usuario> data = apuestaDB.infoPartido(apUpdate.getIdPartido());
                 request.setAttribute("usuario1", data.get(0));
                 request.setAttribute("usuario2", data.get(1));
                 request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);

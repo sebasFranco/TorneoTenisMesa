@@ -178,7 +178,7 @@ create table apuesta
 idApuesta int(11) not null auto_increment, 
 idUsuario int(11) not null, 
 idPartido int(11) not null,
-estado enum('Abierta','Cerrada','Anulada'), 
+estado enum('Abierta','Cerrada','Anulada', 'Ganador', 'Perdedor'), 
 valor int(20), 
 fechaCreacion timestamp, 
 fechaCierre datetime,
@@ -192,6 +192,7 @@ CONSTRAINT fkApuestaPartido FOREIGN KEY (idPartido) REFERENCES partido (idPartid
 
 
 
+
 delimiter ;
 drop trigger cu12_asignacionPremio
 ;
@@ -199,12 +200,28 @@ drop trigger cu12_asignacionPremio
 
 
 delimiter //
-CREATE TRIGGER cu12_asignacionPremio BEFORE UPDATE ON usuariopartido
+CREATE TRIGGER cu12_asignacionPremio AFTER UPDATE ON usuariopartido
 FOR EACH ROW
 BEGIN
+	declare conteo int;
+    declare usuaGanador int;
+    declare usuaPerdedor int;
    IF NEW.resultado is not null THEN
-	/*Cierre de todos los partidos asociados en las apuestas*/
-	   update apuesta set fechaCierre = current_timestamp, estado = 'Cerrada' where idPartido = NEW.idPartido;
+	/*Se cierran las apuestas que estan asociadas con el partido*/
+    update apuesta set fechaCierre = current_timestamp, estado = 'Cerrada' where idPartido = NEW.idPartido;
+	/*Identificar los ganadores y abonar el valor ganado*/
+    select count(1) into conteo from usuariopartido where idPartido = NEW.idPartido and resultado is not null;
+    if conteo >= 2  then
+        /*idUsuario del ganador*/
+        select idUsuario into usuaGanador from usuariopartido where idPartido = NEW.idPartido and resultado is not null order by 1 desc limit 1;
+        /*idUsuario del perdedor*/
+        select idUsuario into usuaPerdedor from usuariopartido where idPartido = NEW.idPartido and resultado is not null order by 1 asc limit 1;
+        
+        update apuesta set estado = 'Ganador' where idPartido = NEW.idPartido and ganador = usuaGanador;
+        update apuesta set estado = 'Perdedor' where idPartido = NEW.idPartido and ganador = usuaPerdedor;
+        
+    end if;
+    
    END IF;
 END;//
 delimiter ;

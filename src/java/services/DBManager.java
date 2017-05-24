@@ -22,7 +22,7 @@ public class DBManager {
     private static String JDBC_URL = "jdbc:mysql://localhost:3306/";
     private static String JDBC_DB = "torneotenismesa";
     private static String JDBC_USER = "root";
-    private static String JDBC_PASSWORD = "";
+    private static String JDBC_PASSWORD = "root";
     private static Driver driver = null;
     
     public static synchronized Connection getConnection() throws SQLException{

@@ -69,7 +69,7 @@ public class CrearApuesta extends HttpServlet {
                 request.setAttribute("idApuesta", idAp);
                 request.getRequestDispatcher("/Apostador/Apuestas").forward(request, response);
             }else{
-                java.util.List<String> data = apuestaDB.infoPartido(Integer.parseInt(partido));
+                java.util.List<Usuario> data = apuestaDB.infoPartido(Integer.parseInt(partido));
                 request.setAttribute("usuario1", data.get(0));
                 request.setAttribute("usuario2", data.get(1));
                 request.getRequestDispatcher("/apostador/crearApuesta.jsp").forward(request, response);

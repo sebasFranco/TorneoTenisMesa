@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import modelo.Apuesta;
+import modelo.Usuario;
 import services.DBManager;
 
 /**
@@ -177,26 +178,26 @@ public class ApuestaDB {
         return apuesta;
     }
 
-    public List<String> infoPartido(int partido) {
+    public List<Usuario> infoPartido(int partido) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        java.util.List<String> usuarios = new java.util.Stack<String>();
+        java.util.List<Usuario> usuarios = new java.util.Stack<Usuario>();
         
         try {
             connection = DBManager.getConnection();
-            String sql = "select ust.cedula cedula, ust.apellido apellido, ust.nombre nombre from usuariopartido usp left join usuario ust on usp.idUsuario = ust.idUsuario where usp.idPartido = ? and ust.tipo = 'Jugador'";
+            String sql = "select ust.idUsuario idUsuario, ust.cedula cedula, ust.apellido apellido, ust.nombre nombre from usuariopartido usp left join usuario ust on usp.idUsuario = ust.idUsuario where usp.idPartido = ? and ust.tipo = 'Jugador'";
             LOGGER.log(Level.INFO, "Ejecutando el query {0}", sql);
             statement = connection.prepareStatement(sql);
             statement.setInt(1, partido);
             rs = statement.executeQuery();
             while(rs.next()){
-                String rest = rs.getString("cedula");
-                rest += " ";
-                rest += rs.getString("apellido");
-                rest += " ";
-                rest += rs.getString("nombre");
-                usuarios.add(rest);
+                Usuario usuario = new Usuario();
+                usuario.setApellido(rs.getString("apellido"));
+                usuario.setCedula(rs.getString("cedula"));
+                usuario.setNombre(rs.getString("nombre"));
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                usuarios.add(usuario);
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "infoPartido", ex);

@@ -30,8 +30,8 @@
                             <div class="form-group">
                                 <label for="ganador" class="col-sm-4 control-label">Ganador</label>
                                 <div class="col-sm-8">
-                                    <input type="radio" class="form-horizontal" name="ganador" value="${usuario1}" checked> ${usuario1}<br>
-                                    <input type="radio" class="form-horizontal" name="ganador" value="${usuario2}"> ${usuario2}<br>
+                                    <input type="radio" class="form-horizontal" name="ganador" value="${usuario1.idUsuario}" checked> ${usuario1.cedula} ${usuario1.nombre} ${usuario1.apellido}<br>
+                                    <input type="radio" class="form-horizontal" name="ganador" value="${usuario2.idUsuario}"> ${usuario2.cedula} ${usuario2.nombre} ${usuario2.apellido}<br>
                                 </div>
                             </div>
                             
